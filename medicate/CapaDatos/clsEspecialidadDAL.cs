@@ -2,6 +2,7 @@
 using System.Data;
 using MySql.Data.MySqlClient;
 using MedicDate.CapaNegocio;
+using medicate.CapaDatos;
 
 namespace MedicDate.CapaDatos
 {

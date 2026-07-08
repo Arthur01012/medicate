@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Data;
 using System.Configuration;
-using MySql.Data.MySqlClient;  // ← DEBE SER MySql
+using MySql.Data.MySqlClient;
 
-namespace MedicDate.CapaDatos
+namespace medicate.CapaDatos
 {
     public class clsConexion
     {
@@ -26,7 +26,6 @@ namespace MedicDate.CapaDatos
             }
         }
 
-        // ✅ ESTE MÉTODO ESPERA MySqlParameter[]
         public static DataTable EjecutarConsulta(string consulta, MySqlParameter[] parametros = null)
         {
             using (MySqlConnection conexion = ObtenerConexion())

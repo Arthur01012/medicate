@@ -2,6 +2,7 @@
 using System.Data;
 using MySql.Data.MySqlClient;  // ← CAMBIADO
 using MedicDate.CapaNegocio;
+using medicate.CapaDatos;
 
 namespace MedicDate.CapaDatos
 {

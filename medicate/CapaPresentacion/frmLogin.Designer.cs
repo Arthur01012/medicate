@@ -28,114 +28,125 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.lblTitulo = new System.Windows.Forms.Label();
-            this.lblUsuario = new System.Windows.Forms.Label();
-            this.txtUsuario = new System.Windows.Forms.TextBox();
-            this.lblContrasena = new System.Windows.Forms.Label();
-            this.txtContrasena = new System.Windows.Forms.TextBox();
-            this.btnCancelar = new System.Windows.Forms.Button();
-            this.btnAceptar = new System.Windows.Forms.Button();
-            this.SuspendLayout();
+            lblTitulo = new Label();
+            lblUsuario = new Label();
+            txtUsuario = new TextBox();
+            lblContrasena = new Label();
+            txtContrasena = new TextBox();
+            btnCancelar = new Button();
+            btnAceptar = new Button();
+            btnPrueba = new Button();
+            SuspendLayout();
             // 
             // lblTitulo
             // 
-            this.lblTitulo.AutoSize = true;
-            this.lblTitulo.Font = new System.Drawing.Font("Segoe UI", 26F, System.Drawing.FontStyle.Bold);
-            this.lblTitulo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(44)))), ((int)(((byte)(44)))));
-            this.lblTitulo.Location = new System.Drawing.Point(430, 80);
-            this.lblTitulo.Name = "lblTitulo";
-            this.lblTitulo.Size = new System.Drawing.Size(232, 47);
-            this.lblTitulo.TabIndex = 0;
-            this.lblTitulo.Text = "Iniciar Sesión";
+            lblTitulo.AutoSize = true;
+            lblTitulo.Font = new Font("Segoe UI", 26F, FontStyle.Bold);
+            lblTitulo.ForeColor = Color.FromArgb(44, 44, 44);
+            lblTitulo.Location = new Point(573, 123);
+            lblTitulo.Margin = new Padding(4, 0, 4, 0);
+            lblTitulo.Name = "lblTitulo";
+            lblTitulo.Size = new Size(302, 60);
+            lblTitulo.TabIndex = 0;
+            lblTitulo.Text = "Iniciar Sesión";
             // 
             // lblUsuario
             // 
-            this.lblUsuario.AutoSize = true;
-            this.lblUsuario.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.lblUsuario.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(44)))), ((int)(((byte)(44)))));
-            this.lblUsuario.Location = new System.Drawing.Point(370, 160);
-            this.lblUsuario.Name = "lblUsuario";
-            this.lblUsuario.Size = new System.Drawing.Size(64, 21);
-            this.lblUsuario.TabIndex = 1;
-            this.lblUsuario.Text = "Usuario";
+            lblUsuario.AutoSize = true;
+            lblUsuario.Font = new Font("Segoe UI", 12F);
+            lblUsuario.ForeColor = Color.FromArgb(44, 44, 44);
+            lblUsuario.Location = new Point(493, 246);
+            lblUsuario.Margin = new Padding(4, 0, 4, 0);
+            lblUsuario.Name = "lblUsuario";
+            lblUsuario.Size = new Size(79, 28);
+            lblUsuario.TabIndex = 1;
+            lblUsuario.Text = "Usuario";
             // 
             // txtUsuario
             // 
-            this.txtUsuario.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.txtUsuario.Location = new System.Drawing.Point(370, 184);
-            this.txtUsuario.Name = "txtUsuario";
-            this.txtUsuario.Size = new System.Drawing.Size(300, 29);
-            this.txtUsuario.TabIndex = 2;
+            txtUsuario.Font = new Font("Segoe UI", 12F);
+            txtUsuario.Location = new Point(493, 283);
+            txtUsuario.Margin = new Padding(4, 5, 4, 5);
+            txtUsuario.Name = "txtUsuario";
+            txtUsuario.Size = new Size(399, 34);
+            txtUsuario.TabIndex = 2;
             // 
             // lblContrasena
             // 
-            this.lblContrasena.AutoSize = true;
-            this.lblContrasena.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.lblContrasena.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(44)))), ((int)(((byte)(44)))));
-            this.lblContrasena.Location = new System.Drawing.Point(370, 230);
-            this.lblContrasena.Name = "lblContrasena";
-            this.lblContrasena.Size = new System.Drawing.Size(81, 21);
-            this.lblContrasena.TabIndex = 3;
-            this.lblContrasena.Text = "Contraseña";
+            lblContrasena.AutoSize = true;
+            lblContrasena.Font = new Font("Segoe UI", 12F);
+            lblContrasena.ForeColor = Color.FromArgb(44, 44, 44);
+            lblContrasena.Location = new Point(493, 354);
+            lblContrasena.Margin = new Padding(4, 0, 4, 0);
+            lblContrasena.Name = "lblContrasena";
+            lblContrasena.Size = new Size(110, 28);
+            lblContrasena.TabIndex = 3;
+            lblContrasena.Text = "Contraseña";
             // 
             // txtContrasena
             // 
-            this.txtContrasena.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.txtContrasena.Location = new System.Drawing.Point(370, 254);
-            this.txtContrasena.Name = "txtContrasena";
-            this.txtContrasena.PasswordChar = '*';
-            this.txtContrasena.Size = new System.Drawing.Size(300, 29);
-            this.txtContrasena.TabIndex = 4;
+            txtContrasena.Font = new Font("Segoe UI", 12F);
+            txtContrasena.Location = new Point(493, 391);
+            txtContrasena.Margin = new Padding(4, 5, 4, 5);
+            txtContrasena.Name = "txtContrasena";
+            txtContrasena.PasswordChar = '*';
+            txtContrasena.Size = new Size(399, 34);
+            txtContrasena.TabIndex = 4;
             // 
             // btnCancelar
             // 
-            this.btnCancelar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
-            this.btnCancelar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCancelar.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
-            this.btnCancelar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(44)))), ((int)(((byte)(44)))));
-            this.btnCancelar.Location = new System.Drawing.Point(370, 320);
-            this.btnCancelar.Name = "btnCancelar";
-            this.btnCancelar.Size = new System.Drawing.Size(140, 47);
-            this.btnCancelar.TabIndex = 5;
-            this.btnCancelar.Text = "Cancelar";
-            this.btnCancelar.UseVisualStyleBackColor = false;
-            this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
+            btnCancelar.BackColor = Color.FromArgb(242, 242, 242);
+            btnCancelar.FlatStyle = FlatStyle.Flat;
+            btnCancelar.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            btnCancelar.ForeColor = Color.FromArgb(44, 44, 44);
+            btnCancelar.Location = new Point(493, 492);
+            btnCancelar.Margin = new Padding(4, 5, 4, 5);
+            btnCancelar.Name = "btnCancelar";
+            btnCancelar.Size = new Size(187, 72);
+            btnCancelar.TabIndex = 5;
+            btnCancelar.Text = "Cancelar";
+            btnCancelar.UseVisualStyleBackColor = false;
+            btnCancelar.Click += btnCancelar_Click;
             // 
             // btnAceptar
             // 
-            this.btnAceptar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(197)))), ((int)(((byte)(94)))));
-            this.btnAceptar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnAceptar.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
-            this.btnAceptar.ForeColor = System.Drawing.Color.White;
-            this.btnAceptar.Location = new System.Drawing.Point(530, 320);
-            this.btnAceptar.Name = "btnAceptar";
-            this.btnAceptar.Size = new System.Drawing.Size(140, 47);
-            this.btnAceptar.TabIndex = 6;
-            this.btnAceptar.Text = "Aceptar";
-            this.btnAceptar.UseVisualStyleBackColor = false;
-            this.btnAceptar.Click += new System.EventHandler(this.btnAceptar_Click);
+            btnAceptar.BackColor = Color.FromArgb(34, 197, 94);
+            btnAceptar.FlatStyle = FlatStyle.Flat;
+            btnAceptar.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            btnAceptar.ForeColor = Color.White;
+            btnAceptar.Location = new Point(707, 492);
+            btnAceptar.Margin = new Padding(4, 5, 4, 5);
+            btnAceptar.Name = "btnAceptar";
+            btnAceptar.Size = new Size(187, 72);
+            btnAceptar.TabIndex = 6;
+            btnAceptar.Text = "Aceptar";
+            btnAceptar.UseVisualStyleBackColor = false;
+            btnAceptar.Click += btnAceptar_Click;
+  
             // 
             // frmLogin
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
-            this.ClientSize = new System.Drawing.Size(1000, 500);
-            this.Controls.Add(this.btnAceptar);
-            this.Controls.Add(this.btnCancelar);
-            this.Controls.Add(this.txtContrasena);
-            this.Controls.Add(this.lblContrasena);
-            this.Controls.Add(this.txtUsuario);
-            this.Controls.Add(this.lblUsuario);
-            this.Controls.Add(this.lblTitulo);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.MaximizeBox = false;
-            this.Name = "frmLogin";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "MedicDate - Iniciar Sesión";
-            this.Load += new System.EventHandler(this.frmLogin_Load);
-            this.ResumeLayout(false);
-            this.PerformLayout();
+            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.FromArgb(242, 242, 242);
+            ClientSize = new Size(1333, 769);
+            Controls.Add(btnPrueba);
+            Controls.Add(btnAceptar);
+            Controls.Add(btnCancelar);
+            Controls.Add(txtContrasena);
+            Controls.Add(lblContrasena);
+            Controls.Add(txtUsuario);
+            Controls.Add(lblUsuario);
+            Controls.Add(lblTitulo);
+            FormBorderStyle = FormBorderStyle.FixedDialog;
+            Margin = new Padding(4, 5, 4, 5);
+            MaximizeBox = false;
+            Name = "frmLogin";
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "MedicDate - Iniciar Sesión";
+            Load += frmLogin_Load;
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -147,5 +158,6 @@
         private System.Windows.Forms.TextBox txtContrasena;
         private System.Windows.Forms.Button btnCancelar;
         private System.Windows.Forms.Button btnAceptar;
+        private Button btnPrueba;
     }
 }

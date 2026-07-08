@@ -3,42 +3,89 @@ using System.Data;
 using MySql.Data.MySqlClient;
 using MedicDate.CapaNegocio;
 using MedicDate.Helpers;
+using medicate.CapaDatos;
 
 namespace MedicDate.CapaDatos
 {
     public class clsUsuarioDAL
     {
+        public static bool UsuarioExiste(string usuario)
+        {
+            string consulta = "SELECT COUNT(*) FROM USUARIO WHERE usuario = @usuario";
+            MySqlParameter[] parametros = {
+                new MySqlParameter("@usuario", usuario)
+            };
+
+            object resultado = clsConexion.EjecutarScalar(consulta, parametros);
+            return Convert.ToInt32(resultado) > 0;
+        }
+
+        public static bool UsuarioActivo(string usuario)
+        {
+            string consulta = "SELECT activo FROM USUARIO WHERE usuario = @usuario";
+            MySqlParameter[] parametros = {
+                new MySqlParameter("@usuario", usuario)
+            };
+
+            DataTable resultado = clsConexion.EjecutarConsulta(consulta, parametros);
+            if (resultado.Rows.Count > 0)
+            {
+                return Convert.ToBoolean(resultado.Rows[0]["activo"]);
+            }
+            return false;
+        }
+
         public static clsUsuario Autenticar(string usuario, string contrasena)
         {
             string contrasenaEncriptada = clsEncriptacion.EncriptarSHA256(contrasena);
             string consulta = @"SELECT u.*, r.nombre as nombre_rol 
                                FROM USUARIO u
                                INNER JOIN ROL r ON u.id_rol = r.id_rol
-                               WHERE u.usuario = @usuario AND u.contrasena = @contrasena AND u.activo = 1";
+                               WHERE u.usuario = @usuario AND u.activo = 1";
 
             MySqlParameter[] parametros = {
-                new MySqlParameter("@usuario", usuario),
-                new MySqlParameter("@contrasena", contrasenaEncriptada)
+                new MySqlParameter("@usuario", usuario)
             };
 
             DataTable resultado = clsConexion.EjecutarConsulta(consulta, parametros);
 
-            if (resultado.Rows.Count > 0)
+            if (resultado.Rows.Count == 0)
             {
-                clsUsuario user = new clsUsuario
-                {
-                    id_usuario = Convert.ToInt32(resultado.Rows[0]["id_usuario"]),
-                    usuario = resultado.Rows[0]["usuario"].ToString(),
-                    id_rol = Convert.ToInt32(resultado.Rows[0]["id_rol"]),
-                    nombre_rol = resultado.Rows[0]["nombre_rol"].ToString(),
-                    activo = Convert.ToBoolean(resultado.Rows[0]["activo"])
-                };
-
-                // Actualizar último acceso
-                ActualizarUltimoAcceso(user.id_usuario);
-                return user;
+                return null;
             }
-            return null;
+
+            DataRow fila = resultado.Rows[0];
+            string contrasenaAlmacenada = fila["contrasena"].ToString();
+            bool passwordValido = string.Equals(contrasenaAlmacenada, contrasenaEncriptada, StringComparison.OrdinalIgnoreCase)
+                                   || string.Equals(contrasenaAlmacenada, contrasena, StringComparison.Ordinal);
+
+            if (!passwordValido)
+            {
+                return null;
+            }
+
+            clsUsuario user = new clsUsuario
+            {
+                id_usuario = Convert.ToInt32(fila["id_usuario"]),
+                usuario = fila["usuario"].ToString(),
+                id_rol = Convert.ToInt32(fila["id_rol"]),
+                nombre_rol = fila["nombre_rol"].ToString(),
+                activo = Convert.ToBoolean(fila["activo"])
+            };
+
+            if (!string.Equals(contrasenaAlmacenada, contrasenaEncriptada, StringComparison.OrdinalIgnoreCase))
+            {
+                // Actualizar contraseña almacenada en texto plano a su hash SHA256
+                string actualizacion = "UPDATE USUARIO SET contrasena = @contrasena WHERE id_usuario = @id";
+                MySqlParameter[] parametrosActualizacion = {
+                    new MySqlParameter("@contrasena", contrasenaEncriptada),
+                    new MySqlParameter("@id", user.id_usuario)
+                };
+                clsConexion.EjecutarNonQuery(actualizacion, parametrosActualizacion);
+            }
+
+            ActualizarUltimoAcceso(user.id_usuario);
+            return user;
         }
 
         public static void ActualizarUltimoAcceso(int id_usuario)
@@ -66,7 +113,7 @@ namespace MedicDate.CapaDatos
             };
 
             object resultado = clsConexion.EjecutarScalar(consulta, parametros);
-            if (resultado != null)
+            if (resultado != null && resultado != DBNull.Value)
             {
                 usuario.id_usuario = Convert.ToInt32(resultado);
                 return true;
@@ -80,13 +127,6 @@ namespace MedicDate.CapaDatos
                                SET usuario = @usuario, id_rol = @id_rol, activo = @activo
                                WHERE id_usuario = @id";
 
-            if (!string.IsNullOrEmpty(usuario.contrasena))
-            {
-                consulta = @"UPDATE USUARIO 
-                            SET usuario = @usuario, contrasena = @contrasena, id_rol = @id_rol, activo = @activo
-                            WHERE id_usuario = @id";
-            }
-
             MySqlParameter[] parametros = {
                 new MySqlParameter("@usuario", usuario.usuario),
                 new MySqlParameter("@id_rol", usuario.id_rol),
@@ -97,6 +137,9 @@ namespace MedicDate.CapaDatos
             if (!string.IsNullOrEmpty(usuario.contrasena))
             {
                 string contrasenaEncriptada = clsEncriptacion.EncriptarSHA256(usuario.contrasena);
+                consulta = @"UPDATE USUARIO 
+                            SET usuario = @usuario, contrasena = @contrasena, id_rol = @id_rol, activo = @activo
+                            WHERE id_usuario = @id";
                 Array.Resize(ref parametros, 5);
                 parametros[4] = new MySqlParameter("@contrasena", contrasenaEncriptada);
             }
