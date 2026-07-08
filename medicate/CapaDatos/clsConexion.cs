@@ -3,7 +3,7 @@ using System.Data;
 using System.Configuration;
 using MySql.Data.MySqlClient;
 
-namespace medicate.CapaDatos
+namespace MedicDate.CapaDatos
 {
     public class clsConexion
     {

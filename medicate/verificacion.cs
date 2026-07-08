@@ -1,4 +1,4 @@
-using medicate.CapaDatos;
+using MedicDate.CapaDatos;
 using MySql.Data.MySqlClient;
 using System;
 using System.Data;

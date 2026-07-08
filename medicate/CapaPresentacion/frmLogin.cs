@@ -1,5 +1,4 @@
-﻿using medicate.CapaDatos;
-using MedicDate.CapaDatos;
+﻿using MedicDate.CapaDatos;
 using MedicDate.CapaNegocio;
 using MedicDate.Helpers;
 using MySql.Data.MySqlClient;
