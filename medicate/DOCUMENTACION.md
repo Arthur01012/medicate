@@ -1,71 +1,122 @@
-# Documentación del proyecto MedicDate
+# Documentación completa del proyecto MedicDate
 
-## 1. Información general
+## 1. Introducción
 
-MedicDate es una aplicación de escritorio desarrollada en C# con Windows Forms, orientada a la gestión de pacientes, médicos, asistentes, citas y usuarios del sistema.
+MedicDate es una aplicación de escritorio desarrollada en C# con Windows Forms para la gestión clínica y administrativa de una clínica o consultorio médico. El sistema permite administrar usuarios, pacientes, empleados, doctores, asistentes y citas, además de validar operaciones críticas mediante transacciones de base de datos.
 
-- Tecnologías principales: .NET 8, Windows Forms, MySQL, MySqlConnector
-- Arquitectura: capas por responsabilidad
-- Base de datos: MySQL local configurada mediante [App.config](App.config)
+El proyecto sigue una arquitectura por capas para separar la interfaz de usuario, la lógica de negocio y el acceso a datos.
 
-## 2. Estructura del proyecto
+## 2. Objetivo del sistema
 
-- [CapaPresentacion](CapaPresentacion): formularios de login, registro, administración y agendas.
-- [CapaNegocio](CapaNegocio): clases de negocio como usuarios, pacientes, empleados, doctores, citas y horarios.
-- [CapaDatos](CapaDatos): acceso a datos y operaciones transaccionales con MySQL.
-- [Helpers](Helpers): utilidades para validaciones y encriptación.
+El objetivo principal del sistema es centralizar y automatizar procesos de gestión médica básicos, tales como:
 
-## 3. Estado actual del sistema
+- Registro y autenticación de usuarios.
+- Gestión de pacientes.
+- Gestión de personal médico y administrativo.
+- Registro de citas médicas.
+- Validación de integridad de datos mediante transacciones.
 
-### Funcionalidades implementadas o validadas
+## 3. Tecnologías utilizadas
 
-- Autenticación de usuarios en el login.
-- Registro de pacientes.
-- Registro de asistentes y doctores.
-- Gestión de citas y agendas.
-- Inserciones transaccionales en la base de datos.
-- Validación de commit y rollback mediante pruebas de integración.
+- Lenguaje: C#
+- Framework de interfaz: Windows Forms
+- Plataforma: .NET 8
+- Base de datos: MySQL
+- Conectores: MySql.Data y MySqlConnector
+- Herramienta de ejecución: dotnet
 
-### Componentes clave
+## 4. Arquitectura del proyecto
 
-- [CapaDatos/clsConexion.cs](CapaDatos/clsConexion.cs): conexión centralizada y ejecución de consultas.
+El proyecto está organizado en capas:
+
+### 4.1 Capa de presentación
+Ubicada en [CapaPresentacion](CapaPresentacion).
+
+Contiene los formularios de la aplicación, entre ellos:
+
+- [CapaPresentacion/frmLogin.cs](CapaPresentacion/frmLogin.cs): inicio de sesión.
+- [CapaPresentacion/frmRegistroPaciente.cs](CapaPresentacion/frmRegistroPaciente.cs): registro de pacientes.
+- [CapaPresentacion/frmRegistroDoctor.cs](CapaPresentacion/frmRegistroDoctor.cs): registro de doctores.
+- [CapaPresentacion/frmRegistroAsistente.cs](CapaPresentacion/frmRegistroAsistente.cs): registro de asistentes.
+- [CapaPresentacion/frmNuevaCita.cs](CapaPresentacion/frmNuevaCita.cs): creación de citas.
+- [CapaPresentacion/frmAdministrador.cs](CapaPresentacion/frmAdministrador.cs): panel administrativo.
+- [CapaPresentacion/frmAgendaMedico.cs](CapaPresentacion/frmAgendaMedico.cs): agenda médica.
+- [CapaPresentacion/frmAgendaAsistente.cs](CapaPresentacion/frmAgendaAsistente.cs): agenda de asistente.
+
+### 4.2 Capa de negocio
+Ubicada en [CapaNegocio](CapaNegocio).
+
+Aquí se definen las clases que representan entidades del sistema, por ejemplo:
+
+- [CapaNegocio/clsUsuario.cs](CapaNegocio/clsUsuario.cs)
+- [CapaNegocio/clsPaciente.cs](CapaNegocio/clsPaciente.cs)
+- [CapaNegocio/clsEmpleado.cs](CapaNegocio/clsEmpleado.cs)
+- [CapaNegocio/clsDoctor.cs](CapaNegocio/clsDoctor.cs)
+- [CapaNegocio/clsAsistente.cs](CapaNegocio/clsAsistente.cs)
+- [CapaNegocio/clsCita.cs](CapaNegocio/clsCita.cs)
+- [CapaNegocio/clsHorario.cs](CapaNegocio/clsHorario.cs)
+- [CapaNegocio/clsEspecialidad.cs](CapaNegocio/clsEspecialidad.cs)
+- [CapaNegocio/clsMunicipio.cs](CapaNegocio/clsMunicipio.cs)
+
+### 4.3 Capa de datos
+Ubicada en [CapaDatos](CapaDatos).
+
+Contiene la lógica de acceso a la base de datos y las operaciones transaccionales. Los archivos clave son:
+
+- [CapaDatos/clsConexion.cs](CapaDatos/clsConexion.cs): creación de conexiones y ejecución de consultas.
 - [CapaDatos/clsUsuarioDAL.cs](CapaDatos/clsUsuarioDAL.cs): autenticación y creación de usuarios.
 - [CapaDatos/clsPacienteDAL.cs](CapaDatos/clsPacienteDAL.cs): inserción de pacientes.
-- [CapaDatos/clsEmpleadoDAL.cs](CapaDatos/clsEmpleadoDAL.cs): inserción de empleados.
+- [CapaDatos/clsEmpleadoDAL.cs](CapaDatos/clsEmpleadoDAL.cs): inserción y lectura de empleados.
 - [CapaDatos/clsDoctorDAL.cs](CapaDatos/clsDoctorDAL.cs): inserción de doctores.
 - [CapaDatos/clsAsistenteDAL.cs](CapaDatos/clsAsistenteDAL.cs): inserción de asistentes.
 - [CapaDatos/clsCitaDAL.cs](CapaDatos/clsCitaDAL.cs): inserción y gestión de citas.
-- [CapaPresentacion/frmLogin.cs](CapaPresentacion/frmLogin.cs): flujo de autenticación.
-- [PruebasIntegracionFinal/Program.cs](PruebasIntegracionFinal/Program.cs): pruebas de integración final para commit y rollback.
 
-## 4. Manejo de base de datos
+### 4.4 Helpers
+Ubicada en [Helpers](Helpers).
 
-La aplicación usa una conexión a MySQL con transacciones para garantizar consistencia en operaciones multi-tabla.
+Incluye componentes auxiliares como:
 
-### Tablas involucradas en las pruebas finales
+- [Helpers/clsEncriptacion.cs](Helpers/clsEncriptacion.cs): funciones de cifrado y manejo de credenciales.
+- [Helpers/clsValidaciones.cs](Helpers/clsValidaciones.cs): reglas de validación reutilizables.
 
-- USUARIO
-- PACIENTE
-- EMPLEADO
-- DOCTOR
-- ASISTENTE
-- CITA
+## 5. Configuración de la base de datos
 
-## 5. Pruebas realizadas
+La conexión a MySQL se configura en [App.config](App.config).
 
-### Prueba de compilación
+La aplicación trabaja contra una base de datos local o de desarrollo, donde se almacenan los registros de usuarios, pacientes, empleados y citas.
 
-Se verificó que el proyecto principal compila correctamente con:
+## 6. Funcionalidades implementadas
+
+### 6.1 Autenticación de usuarios
+Se implementó un flujo de login que valida credenciales de usuario contra la base de datos.
+
+### 6.2 Registro de pacientes
+Permite capturar datos del paciente y persistirlos en la base de datos.
+
+### 6.3 Registro de doctores y asistentes
+Se completó la lógica para almacenarlos con sus respectivos datos y relación con empleados.
+
+### 6.4 Gestión de citas
+Se añadió la lógica de registro y manejo de citas, incluyendo fecha, hora, estado y médico asociado.
+
+### 6.5 Transacciones y consistencia
+El sistema usa transacciones para asegurar que operaciones multi-tabla se completen o reviertan por completo en caso de fallar.
+
+## 7. Pruebas realizadas
+
+### 7.1 Prueba de compilación
+Se validó que el proyecto compile correctamente mediante:
 
 ```powershell
 dotnet build .\medicate.csproj
 ```
 
-Resultado: compilación exitosa, con advertencias de nulabilidad y algunas advertencias del código existente.
+Resultado: compilación exitosa con advertencias de nulabilidad y algunas advertencias históricas del código.
 
-### Prueba de integración final
+### 7.2 Prueba de integración final
+Se ejecutó una prueba integral para validar el comportamiento real de las operaciones transaccionales con la base de datos.
 
-Se ejecutó el runner de pruebas finales con:
+Comando ejecutado:
 
 ```powershell
 dotnet run --project .\PruebasIntegracionFinal\PruebasIntegracionFinal.csproj
@@ -77,55 +128,70 @@ Resultado observado:
 - Prueba de rollback completada.
 - Pruebas finalizadas correctamente.
 
-### Datos enviados durante las pruebas
+### 7.3 Alcance de las pruebas
+Las pruebas afectaron las tablas:
 
-#### Escenario de commit
+- USUARIO
+- PACIENTE
+- EMPLEADO
+- DOCTOR
+- ASISTENTE
+- CITA
 
-- Usuario: usuario generado dinámicamente con sufijo temporal.
-- Contraseña: 123456.
-- Rol: primer rol encontrado en la tabla ROL.
-- Paciente: datos de prueba con nombre, apellidos, correo y dirección ficticios.
-- Empleado doctor: datos de prueba con CURP, correo y tipo empleado.
-- Empleado asistente: datos de prueba con CURP, correo y tipo empleado.
-- Doctor: datos con cédula profesional y consultorio.
-- Asistente: turno asignado.
-- Cita: fecha, hora, motivo y costo de prueba.
+## 8. Datos utilizados durante las pruebas
 
-#### Escenario de rollback
+Durante las pruebas se ingresaron datos ficticios generados dinámicamente para evitar conflictos con registros existentes.
 
-- Se enviaron datos similares, pero con valores diferenciados para verificar que el rollback elimine toda la operación.
+### Escenario de commit
+Se insertaron datos para:
 
-## 6. Observaciones importantes
+- Un usuario nuevo.
+- Un paciente nuevo.
+- Un empleado tipo doctor.
+- Un empleado tipo asistente.
+- Un doctor asociado al empleado doctor.
+- Un asistente asociado al empleado asistente.
+- Una cita nueva.
 
-- El flujo transaccional funciona correctamente.
-- Las operaciones de commit y rollback quedan validadas contra la base de datos real.
-- El proyecto quedó preparado para seguir con la integración de formularios y validaciones de negocio adicionales.
+### Escenario de rollback
+Se ejecutó un flujo similar, pero al terminar la transacción se aplicó rollback para verificar que los registros no quedaran persistidos.
 
-## 7. Recomendaciones
+## 9. Observaciones técnicas
 
-### Seguridad
+- El flujo transaccional está funcionando correctamente.
+- La capa de datos se comporta adecuadamente frente a operaciones complejas.
+- El proyecto se encuentra en una etapa funcional de validación y desarrollo intermedio.
+- Se recomienda continuar con la integración de formularios y mejoras de seguridad.
 
-- Eliminar el uso de texto plano para contraseñas y usar algoritmos modernos como Argon2id, bcrypt o scrypt.
-- Mover la cadena de conexión a variables de entorno o un gestor de secretos.
-- Mejorar las validaciones de entrada en formularios.
-- Implementar logs de auditoría para cambios sensibles.
+## 10. Riesgos y recomendaciones
 
-### Calidad y mantenimiento
+### 10.1 Riesgos de seguridad
 
-- Añadir pruebas automatizadas para login fallido, duplicidad de correo y errores de negocio.
-- Separar aún más la lógica de negocio de la capa de acceso a datos.
-- Mantener un entorno de pruebas independiente del entorno productivo.
+- El manejo de contraseñas debe reforzarse.
+- La cadena de conexión debe protegerse mejor.
+- Es recomendable implementar hash moderno para contraseñas.
+- Se debe evitar almacenar secretos en texto plano en archivos de configuración.
 
-## 8. Riesgos y vulnerabilidades potenciales
+### 10.2 Recomendaciones de calidad
 
-- Uso de contraseñas con enfoque inseguro o fallback a texto plano.
-- Manejo de credenciales sensibles en configuración local.
-- Falta de validación estricta en algunos formularios.
-- Posible exposición de mensajes de error demasiado detallados.
+- Implementar validaciones más estrictas en formularios.
+- Añadir logs de auditoría.
+- Crear pruebas automatizadas para casos de error y validación.
+- Separar aún más la lógica de negocio de las operaciones de acceso a datos.
 
-## 9. Siguientes pasos recomendados
+## 11. Estado actual del proyecto
 
-1. Fortalecer el sistema de autenticación y cifrado.
-2. Completar la integración de formularios con validaciones reales.
-3. Añadir pruebas automáticas y manejo de excepciones más robusto.
-4. Preparar una versión más segura para despliegue o validación adicional.
+El proyecto se encuentra en una fase funcional donde:
+
+- La base de datos ya responde a operaciones reales.
+- El flujo de autenticación y registro está operando.
+- Las pruebas de integración confirmaron el manejo de commit y rollback.
+- Faltan mejoras de seguridad, validaciones y consolidación de la interfaz.
+
+## 12. Siguientes pasos recomendados
+
+1. Fortalecer la autenticación y el cifrado de contraseñas.
+2. Mejorar validaciones de entrada en todos los formularios.
+3. Implementar logs y auditoría.
+4. Añadir pruebas automatizadas.
+5. Preparar la aplicación para una siguiente fase de integración y despliegue.
