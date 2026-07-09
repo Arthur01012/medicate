@@ -14,9 +14,5 @@
     <PackageReference Include="System.Data.SqlClient" Version="4.9.1" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Compile Remove="meditate.Tests/**/*.cs" />
-    <Compile Remove="PruebasIntegracion/**/*.cs" />
-  </ItemGroup>
 
 </Project>
