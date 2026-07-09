@@ -14,5 +14,13 @@
     <PackageReference Include="System.Data.SqlClient" Version="4.9.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Remove="PruebasIntegracion/**/*.cs" />
+    <Compile Remove="PruebasIntegracionFinal/**/*.cs" />
+    <EmbeddedResource Remove="PruebasIntegracion/**" />
+    <EmbeddedResource Remove="PruebasIntegracionFinal/**" />
+    <None Remove="PruebasIntegracion/**" />
+    <None Remove="PruebasIntegracionFinal/**" />
+  </ItemGroup>
 
 </Project>

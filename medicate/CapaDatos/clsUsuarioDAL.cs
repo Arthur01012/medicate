@@ -111,7 +111,7 @@ namespace MedicDate.CapaDatos
                 new MySqlParameter("@activo", usuario.activo)
             };
 
-            object resultado = clsConexion.EjecutarScalar(consulta, parametros);
+            object resultado = clsConexion.EjecutarScalar(consulta, parametros, transaccion);
             if (resultado != null && resultado != DBNull.Value)
             {
                 usuario.id_usuario = Convert.ToInt32(resultado);
