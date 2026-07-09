@@ -7,7 +7,7 @@ namespace MedicDate.CapaDatos
 {
     public class clsAsistenteDAL
     {
-        public static bool Insertar(clsAsistente asistente)
+        public static bool Insertar(clsAsistente asistente, MySqlTransaction? transaccion = null)
         {
             string consulta = @"INSERT INTO ASISTENTE (id_empleado, turno)
                                VALUES (@id_empleado, @turno)";
@@ -17,7 +17,7 @@ namespace MedicDate.CapaDatos
                 new MySqlParameter("@turno", string.IsNullOrEmpty(asistente.turno) ? DBNull.Value : (object)asistente.turno)
             };
 
-            return clsConexion.EjecutarNonQuery(consulta, parametros) > 0;
+            return clsConexion.EjecutarNonQuery(consulta, parametros, transaccion) > 0;
         }
     }
 }

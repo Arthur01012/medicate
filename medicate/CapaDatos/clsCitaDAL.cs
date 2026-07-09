@@ -7,7 +7,7 @@ namespace MedicDate.CapaDatos
 {
     public class clsCitaDAL
     {
-        public static int Insertar(clsCita cita)
+        public static int Insertar(clsCita cita, MySqlTransaction? transaccion = null)
         {
             string consulta = @"INSERT INTO CITA 
                                (id_paciente, id_doctor, fecha, hora, duracion, motivo, estado, 
@@ -30,7 +30,7 @@ namespace MedicDate.CapaDatos
                 new MySqlParameter("@id_registrado_por", (object)cita.id_registrado_por ?? DBNull.Value)
             };
 
-            object resultado = clsConexion.EjecutarScalar(consulta, parametros);
+            object resultado = clsConexion.EjecutarScalar(consulta, parametros, transaccion);
             return resultado != null ? Convert.ToInt32(resultado) : 0;
         }
 

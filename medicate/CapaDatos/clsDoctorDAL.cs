@@ -7,7 +7,7 @@ namespace MedicDate.CapaDatos
 {
     public class clsDoctorDAL
     {
-        public static bool Insertar(clsDoctor doctor)
+        public static bool Insertar(clsDoctor doctor, MySqlTransaction? transaccion = null)
         {
             string consulta = @"INSERT INTO DOCTOR (id_empleado, cedula_profesional, especialidad_principal, consultorio)
                                VALUES (@id_empleado, @cedula, @especialidad, @consultorio)";
@@ -19,7 +19,7 @@ namespace MedicDate.CapaDatos
                 new MySqlParameter("@consultorio", string.IsNullOrEmpty(doctor.consultorio) ? DBNull.Value : (object)doctor.consultorio)
             };
 
-            return clsConexion.EjecutarNonQuery(consulta, parametros) > 0;
+            return clsConexion.EjecutarNonQuery(consulta, parametros, transaccion) > 0;
         }
 
         public static clsDoctor ObtenerPorId(int id)

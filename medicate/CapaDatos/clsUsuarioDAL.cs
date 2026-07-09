@@ -97,7 +97,7 @@ namespace MedicDate.CapaDatos
             clsConexion.EjecutarNonQuery(consulta, parametros);
         }
 
-        public static bool CrearUsuario(clsUsuario usuario)
+        public static bool CrearUsuario(clsUsuario usuario, MySqlTransaction? transaccion = null)
         {
             string contrasenaEncriptada = clsEncriptacion.EncriptarSHA256(usuario.contrasena);
             string consulta = @"INSERT INTO USUARIO (usuario, contrasena, id_rol, activo) 

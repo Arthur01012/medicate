@@ -7,7 +7,30 @@ namespace MedicDate.CapaDatos
 {
     public class clsConexion
     {
-        private static string cadenaConexion = ConfigurationManager.ConnectionStrings["MedicDateDB"].ConnectionString;
+        private static readonly string cadenaConexion = ObtenerCadenaConexion();
+
+        private static string ObtenerCadenaConexion()
+        {
+            try
+            {
+                string? fromConfig = ConfigurationManager.ConnectionStrings["MedicDateDB"]?.ConnectionString;
+                if (!string.IsNullOrWhiteSpace(fromConfig))
+                {
+                    return fromConfig;
+                }
+
+                string? fromEnvironment = Environment.GetEnvironmentVariable("MEDICDATE_DB_CONNECTION");
+                if (!string.IsNullOrWhiteSpace(fromEnvironment))
+                {
+                    return fromEnvironment;
+                }
+            }
+            catch
+            {
+            }
+
+            return "Server=localhost;Database=medicdate_db;Uid=root;Pwd=";
+        }
 
         public static MySqlConnection ObtenerConexion()
         {
@@ -26,11 +49,13 @@ namespace MedicDate.CapaDatos
             }
         }
 
-        public static DataTable EjecutarConsulta(string consulta, MySqlParameter[] parametros = null)
+        public static DataTable EjecutarConsulta(string consulta, MySqlParameter[] parametros = null, MySqlTransaction? transaccion = null)
         {
-            using (MySqlConnection conexion = ObtenerConexion())
+            MySqlConnection conexion = transaccion?.Connection ?? ObtenerConexion();
+            bool cerrarConexion = transaccion == null;
+            try
             {
-                using (MySqlCommand comando = new MySqlCommand(consulta, conexion))
+                using (MySqlCommand comando = new MySqlCommand(consulta, conexion, transaccion))
                 {
                     if (parametros != null)
                     {
@@ -44,13 +69,22 @@ namespace MedicDate.CapaDatos
                     }
                 }
             }
+            finally
+            {
+                if (cerrarConexion)
+                {
+                    conexion.Dispose();
+                }
+            }
         }
 
-        public static int EjecutarNonQuery(string consulta, MySqlParameter[] parametros = null)
+        public static int EjecutarNonQuery(string consulta, MySqlParameter[] parametros = null, MySqlTransaction? transaccion = null)
         {
-            using (MySqlConnection conexion = ObtenerConexion())
+            MySqlConnection conexion = transaccion?.Connection ?? ObtenerConexion();
+            bool cerrarConexion = transaccion == null;
+            try
             {
-                using (MySqlCommand comando = new MySqlCommand(consulta, conexion))
+                using (MySqlCommand comando = new MySqlCommand(consulta, conexion, transaccion))
                 {
                     if (parametros != null)
                     {
@@ -59,19 +93,35 @@ namespace MedicDate.CapaDatos
                     return comando.ExecuteNonQuery();
                 }
             }
+            finally
+            {
+                if (cerrarConexion)
+                {
+                    conexion.Dispose();
+                }
+            }
         }
 
-        public static object EjecutarScalar(string consulta, MySqlParameter[] parametros = null)
+        public static object EjecutarScalar(string consulta, MySqlParameter[] parametros = null, MySqlTransaction? transaccion = null)
         {
-            using (MySqlConnection conexion = ObtenerConexion())
+            MySqlConnection conexion = transaccion?.Connection ?? ObtenerConexion();
+            bool cerrarConexion = transaccion == null;
+            try
             {
-                using (MySqlCommand comando = new MySqlCommand(consulta, conexion))
+                using (MySqlCommand comando = new MySqlCommand(consulta, conexion, transaccion))
                 {
                     if (parametros != null)
                     {
                         comando.Parameters.AddRange(parametros);
                     }
                     return comando.ExecuteScalar();
+                }
+            }
+            finally
+            {
+                if (cerrarConexion)
+                {
+                    conexion.Dispose();
                 }
             }
         }
