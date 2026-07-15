@@ -9,7 +9,7 @@ namespace MedicDate.CapaDatos
     {
         public static int Insertar(clsEmpleado empleado, MySqlTransaction? transaccion = null)
         {
-            string consulta = @"INSERT INTO EMPLEADO 
+            string consulta = @"INSERT INTO empleado 
                                (nombre, apellido_paterno, apellido_materno, fecha_nacimiento, 
                                 curp, email, telefono_principal, telefono_secundario, 
                                 tipo_empleado, fecha_contratacion, estado, id_usuario)
@@ -40,7 +40,7 @@ namespace MedicDate.CapaDatos
 
         public static clsEmpleado ObtenerPorId(int id)
         {
-            string consulta = "SELECT * FROM EMPLEADO WHERE id_empleado = @id";
+            string consulta = "SELECT * FROM empleado WHERE id_empleado = @id";
             MySqlParameter[] parametros = { new MySqlParameter("@id", id) };
             DataTable resultado = clsConexion.EjecutarConsulta(consulta, parametros);
 

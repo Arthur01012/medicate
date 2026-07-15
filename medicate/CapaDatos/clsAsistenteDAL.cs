@@ -9,7 +9,7 @@ namespace MedicDate.CapaDatos
     {
         public static bool Insertar(clsAsistente asistente, MySqlTransaction? transaccion = null)
         {
-            string consulta = @"INSERT INTO ASISTENTE (id_empleado, turno)
+            string consulta = @"INSERT INTO asistente (id_empleado, turno)
                                VALUES (@id_empleado, @turno)";
 
             MySqlParameter[] parametros = {

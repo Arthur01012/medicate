@@ -10,7 +10,7 @@ namespace MedicDate.CapaDatos
     {
         public static bool UsuarioExiste(string usuario)
         {
-            string consulta = "SELECT COUNT(*) FROM USUARIO WHERE usuario = @usuario";
+            string consulta = "SELECT COUNT(*) FROM usuario WHERE usuario = @usuario";
             MySqlParameter[] parametros = {
                 new MySqlParameter("@usuario", usuario)
             };
@@ -21,7 +21,7 @@ namespace MedicDate.CapaDatos
 
         public static bool UsuarioActivo(string usuario)
         {
-            string consulta = "SELECT activo FROM USUARIO WHERE usuario = @usuario";
+            string consulta = "SELECT activo FROM usuario WHERE usuario = @usuario";
             MySqlParameter[] parametros = {
                 new MySqlParameter("@usuario", usuario)
             };
@@ -38,8 +38,8 @@ namespace MedicDate.CapaDatos
         {
             string contrasenaEncriptada = clsEncriptacion.EncriptarSHA256(contrasena);
             string consulta = @"SELECT u.*, r.nombre as nombre_rol 
-                               FROM USUARIO u
-                               INNER JOIN ROL r ON u.id_rol = r.id_rol
+                               FROM usuario u
+                               INNER JOIN rol r ON u.id_rol = r.id_rol
                                WHERE u.usuario = @usuario AND u.activo = 1";
 
             MySqlParameter[] parametros = {
@@ -75,7 +75,7 @@ namespace MedicDate.CapaDatos
             if (!string.Equals(contrasenaAlmacenada, contrasenaEncriptada, StringComparison.OrdinalIgnoreCase))
             {
                 // Actualizar contraseña almacenada en texto plano a su hash SHA256
-                string actualizacion = "UPDATE USUARIO SET contrasena = @contrasena WHERE id_usuario = @id";
+                string actualizacion = "UPDATE usuario SET contrasena = @contrasena WHERE id_usuario = @id";
                 MySqlParameter[] parametrosActualizacion = {
                     new MySqlParameter("@contrasena", contrasenaEncriptada),
                     new MySqlParameter("@id", user.id_usuario)
@@ -89,7 +89,7 @@ namespace MedicDate.CapaDatos
 
         public static void ActualizarUltimoAcceso(int id_usuario)
         {
-            string consulta = "UPDATE USUARIO SET ultimo_acceso = @fecha WHERE id_usuario = @id";
+            string consulta = "UPDATE usuario SET ultimo_acceso = @fecha WHERE id_usuario = @id";
             MySqlParameter[] parametros = {
                 new MySqlParameter("@fecha", DateTime.Now),
                 new MySqlParameter("@id", id_usuario)
@@ -100,7 +100,7 @@ namespace MedicDate.CapaDatos
         public static bool CrearUsuario(clsUsuario usuario, MySqlTransaction? transaccion = null)
         {
             string contrasenaEncriptada = clsEncriptacion.EncriptarSHA256(usuario.contrasena);
-            string consulta = @"INSERT INTO USUARIO (usuario, contrasena, id_rol, activo) 
+            string consulta = @"INSERT INTO usuario (usuario, contrasena, id_rol, activo) 
                                VALUES (@usuario, @contrasena, @id_rol, @activo);
                                SELECT LAST_INSERT_ID();";
 
@@ -122,7 +122,7 @@ namespace MedicDate.CapaDatos
 
         public static bool ActualizarUsuario(clsUsuario usuario)
         {
-            string consulta = @"UPDATE USUARIO 
+            string consulta = @"UPDATE usuario 
                                SET usuario = @usuario, id_rol = @id_rol, activo = @activo
                                WHERE id_usuario = @id";
 
@@ -136,7 +136,7 @@ namespace MedicDate.CapaDatos
             if (!string.IsNullOrEmpty(usuario.contrasena))
             {
                 string contrasenaEncriptada = clsEncriptacion.EncriptarSHA256(usuario.contrasena);
-                consulta = @"UPDATE USUARIO 
+                consulta = @"UPDATE usuario 
                             SET usuario = @usuario, contrasena = @contrasena, id_rol = @id_rol, activo = @activo
                             WHERE id_usuario = @id";
                 Array.Resize(ref parametros, 5);
@@ -148,7 +148,7 @@ namespace MedicDate.CapaDatos
 
         public static bool EliminarUsuario(int id_usuario)
         {
-            string consulta = "DELETE FROM USUARIO WHERE id_usuario = @id";
+            string consulta = "DELETE FROM usuario WHERE id_usuario = @id";
             MySqlParameter[] parametros = { new MySqlParameter("@id", id_usuario) };
             return clsConexion.EjecutarNonQuery(consulta, parametros) > 0;
         }

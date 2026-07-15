@@ -11,25 +11,17 @@ namespace MedicDate.CapaDatos
 
         private static string ObtenerCadenaConexion()
         {
-            try
-            {
-                string? fromConfig = ConfigurationManager.ConnectionStrings["MedicDateDB"]?.ConnectionString;
-                if (!string.IsNullOrWhiteSpace(fromConfig))
-                {
-                    return fromConfig;
-                }
 
-                string? fromEnvironment = Environment.GetEnvironmentVariable("MEDICDATE_DB_CONNECTION");
-                if (!string.IsNullOrWhiteSpace(fromEnvironment))
-                {
-                    return fromEnvironment;
-                }
-            }
-            catch
+            string? fromConfig = ConfigurationManager.ConnectionStrings["MedicDateDB"]?.ConnectionString;
+            if (!string.IsNullOrWhiteSpace(fromConfig))
             {
+                return fromConfig;
             }
+            
+            return "";
 
-            return "Server=localhost;Database=medicdate_db;Uid=root;Pwd=";
+
+
         }
 
         public static MySqlConnection ObtenerConexion()

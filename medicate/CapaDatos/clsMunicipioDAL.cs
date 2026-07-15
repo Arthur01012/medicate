@@ -7,7 +7,7 @@ namespace MedicDate.CapaDatos
     {
         public static DataTable ObtenerTodos()
         {
-            string consulta = "SELECT id_municipio, nombre, estado, codigo_postal FROM MUNICIPIO ORDER BY nombre";
+            string consulta = "SELECT id_municipio, nombre, estado, codigo_postal FROM municipio ORDER BY nombre";
             return clsConexion.EjecutarConsulta(consulta);
         }
     }

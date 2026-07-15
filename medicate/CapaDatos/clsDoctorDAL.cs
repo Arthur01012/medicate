@@ -9,7 +9,7 @@ namespace MedicDate.CapaDatos
     {
         public static bool Insertar(clsDoctor doctor, MySqlTransaction? transaccion = null)
         {
-            string consulta = @"INSERT INTO DOCTOR (id_empleado, cedula_profesional, especialidad_principal, consultorio)
+            string consulta = @"INSERT INTO doctor (id_empleado, cedula_profesional, especialidad_principal, consultorio)
                                VALUES (@id_empleado, @cedula, @especialidad, @consultorio)";
 
             MySqlParameter[] parametros = {
@@ -26,9 +26,9 @@ namespace MedicDate.CapaDatos
         {
             string consulta = @"SELECT e.*, d.cedula_profesional, d.especialidad_principal, d.consultorio,
                                esp.nombre_especialidad
-                               FROM EMPLEADO e
-                               INNER JOIN DOCTOR d ON e.id_empleado = d.id_empleado
-                               LEFT JOIN ESPECIALIDAD esp ON d.especialidad_principal = esp.id_especialidad
+                               FROM empleado e
+                               INNER JOIN doctor d ON e.id_empleado = d.id_empleado
+                               LEFT JOIN especialidad esp ON d.especialidad_principal = esp.id_especialidad
                                WHERE e.id_empleado = @id";
 
             MySqlParameter[] parametros = { new MySqlParameter("@id", id) };
@@ -66,9 +66,9 @@ namespace MedicDate.CapaDatos
                                CONCAT(e.nombre, ' ', e.apellido_paterno, ' ', IFNULL(e.apellido_materno, '')) as nombre_completo,
                                e.email, e.telefono_principal, d.cedula_profesional, d.consultorio,
                                esp.nombre_especialidad
-                               FROM EMPLEADO e
-                               INNER JOIN DOCTOR d ON e.id_empleado = d.id_empleado
-                               LEFT JOIN ESPECIALIDAD esp ON d.especialidad_principal = esp.id_especialidad
+                               FROM empleado e
+                               INNER JOIN doctor d ON e.id_empleado = d.id_empleado
+                               LEFT JOIN especialidad esp ON d.especialidad_principal = esp.id_especialidad
                                WHERE e.estado = 1
                                ORDER BY e.apellido_paterno, e.nombre";
             return clsConexion.EjecutarConsulta(consulta);

@@ -9,7 +9,7 @@ namespace MedicDate.CapaDatos
     {
         public static int Insertar(clsCita cita, MySqlTransaction? transaccion = null)
         {
-            string consulta = @"INSERT INTO CITA 
+            string consulta = @"INSERT INTO cita 
                                (id_paciente, id_doctor, fecha, hora, duracion, motivo, estado, 
                                 costo, notas_internas, id_registrado_por)
                                VALUES 
@@ -36,7 +36,7 @@ namespace MedicDate.CapaDatos
 
         public static bool Actualizar(clsCita cita)
         {
-            string consulta = @"UPDATE CITA 
+            string consulta = @"UPDATE cita 
                                SET id_paciente = @id_paciente, id_doctor = @id_doctor,
                                    fecha = @fecha, hora = @hora, duracion = @duracion,
                                    motivo = @motivo, estado = @estado, costo = @costo,
@@ -61,14 +61,14 @@ namespace MedicDate.CapaDatos
 
         public static bool Cancelar(int id_cita)
         {
-            string consulta = "UPDATE CITA SET estado = 'Cancelada' WHERE id_cita = @id";
+            string consulta = "UPDATE cita SET estado = 'Cancelada' WHERE id_cita = @id";
             MySqlParameter[] parametros = { new MySqlParameter("@id", id_cita) };
             return clsConexion.EjecutarNonQuery(consulta, parametros) > 0;
         }
 
         public static bool CambiarEstado(int id_cita, string nuevoEstado)
         {
-            string consulta = "UPDATE CITA SET estado = @estado WHERE id_cita = @id";
+            string consulta = "UPDATE cita SET estado = @estado WHERE id_cita = @id";
             MySqlParameter[] parametros = {
                 new MySqlParameter("@estado", nuevoEstado),
                 new MySqlParameter("@id", id_cita)
@@ -81,9 +81,9 @@ namespace MedicDate.CapaDatos
             string consulta = @"SELECT c.*, 
                                p.nombre + ' ' + p.apellido_paterno + ' ' + IFNULL(p.apellido_materno, '') as nombre_paciente,
                                e.nombre + ' ' + e.apellido_paterno + ' ' + IFNULL(e.apellido_materno, '') as nombre_doctor
-                               FROM CITA c
-                               INNER JOIN PACIENTE p ON c.id_paciente = p.id_paciente
-                               INNER JOIN EMPLEADO e ON c.id_doctor = e.id_empleado
+                               FROM cita c
+                               INNER JOIN paciente p ON c.id_paciente = p.id_paciente
+                               INNER JOIN empleado e ON c.id_doctor = e.id_empleado
                                WHERE c.id_cita = @id";
 
             MySqlParameter[] parametros = { new MySqlParameter("@id", id_cita) };
@@ -117,8 +117,8 @@ namespace MedicDate.CapaDatos
             string consulta = @"SELECT c.*, 
                                p.nombre + ' ' + p.apellido_paterno + ' ' + IFNULL(p.apellido_materno, '') as paciente,
                                p.telefono_principal
-                               FROM CITA c
-                               INNER JOIN PACIENTE p ON c.id_paciente = p.id_paciente
+                               FROM cita c
+                               INNER JOIN paciente p ON c.id_paciente = p.id_paciente
                                WHERE c.id_doctor = @id_doctor AND c.fecha = @fecha
                                AND c.estado != 'Cancelada'
                                ORDER BY c.hora";
@@ -136,9 +136,9 @@ namespace MedicDate.CapaDatos
                                p.nombre + ' ' + p.apellido_paterno + ' ' + IFNULL(p.apellido_materno, '') as paciente,
                                e.nombre + ' ' + e.apellido_paterno + ' ' + IFNULL(e.apellido_materno, '') as doctor,
                                p.telefono_principal
-                               FROM CITA c
-                               INNER JOIN PACIENTE p ON c.id_paciente = p.id_paciente
-                               INNER JOIN EMPLEADO e ON c.id_doctor = e.id_empleado
+                               FROM cita c
+                               INNER JOIN paciente p ON c.id_paciente = p.id_paciente
+                               INNER JOIN empleado e ON c.id_doctor = e.id_empleado
                                WHERE c.fecha = @fecha
                                AND c.estado != 'Cancelada'
                                ORDER BY c.hora";
@@ -151,8 +151,8 @@ namespace MedicDate.CapaDatos
         {
             string consulta = @"SELECT c.*, 
                                e.nombre + ' ' + e.apellido_paterno + ' ' + IFNULL(e.apellido_materno, '') as doctor
-                               FROM CITA c
-                               INNER JOIN EMPLEADO e ON c.id_doctor = e.id_empleado
+                               FROM cita c
+                               INNER JOIN empleado e ON c.id_doctor = e.id_empleado
                                WHERE c.id_paciente = @id_paciente
                                ORDER BY c.fecha DESC, c.hora DESC";
 
@@ -162,7 +162,7 @@ namespace MedicDate.CapaDatos
 
         public static bool VerificarDisponibilidad(int id_doctor, DateTime fecha, TimeSpan hora, int duracion)
         {
-            string consulta = @"SELECT COUNT(*) FROM CITA 
+            string consulta = @"SELECT COUNT(*) FROM cita 
                                WHERE id_doctor = @id_doctor 
                                AND fecha = @fecha 
                                AND estado != 'Cancelada'

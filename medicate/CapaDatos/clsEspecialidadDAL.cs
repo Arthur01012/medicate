@@ -9,13 +9,13 @@ namespace MedicDate.CapaDatos
     {
         public static DataTable ObtenerTodos()
         {
-            string consulta = "SELECT id_especialidad, nombre_especialidad FROM ESPECIALIDAD ORDER BY nombre_especialidad";
+            string consulta = "SELECT id_especialidad, nombre_especialidad FROM especialidad ORDER BY nombre_especialidad";
             return clsConexion.EjecutarConsulta(consulta);
         }
 
         public static clsEspecialidad ObtenerPorId(int id)
         {
-            string consulta = "SELECT * FROM ESPECIALIDAD WHERE id_especialidad = @id";
+            string consulta = "SELECT * FROM especialidad WHERE id_especialidad = @id";
             MySqlParameter[] parametros = { new MySqlParameter("@id", id) };
             DataTable resultado = clsConexion.EjecutarConsulta(consulta, parametros);
 

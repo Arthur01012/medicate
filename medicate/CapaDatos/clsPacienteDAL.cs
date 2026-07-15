@@ -9,7 +9,7 @@ namespace MedicDate.CapaDatos
     {
         public static int Insertar(clsPaciente paciente, MySqlTransaction? transaccion = null)
         {
-            string consulta = @"INSERT INTO PACIENTE 
+            string consulta = @"INSERT INTO paciente 
                                (nombre, apellido_paterno, apellido_materno, fecha_nacimiento, 
                                 telefono_principal, telefono_secundario, email, calle, colonia, 
                                 numero, localidad, id_municipio, alergias, notas_medicas)
